@@ -1,0 +1,13 @@
+name = "JuliaDot"
+uuid = "6e6d1f42-da04-4af2-a797-beb4a2ff0d54"
+authors = ["Hiroyuki Okamura"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
