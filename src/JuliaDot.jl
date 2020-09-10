@@ -1,5 +1,5 @@
 module JuliaDot
 
-# Write your package code here.
+include("_dot.jl")
 
 end
