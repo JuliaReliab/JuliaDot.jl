@@ -1,5 +1,5 @@
 
-export dot
+export draw
 
 using PyCall
 using Conda
@@ -12,7 +12,7 @@ function __init__()
     copy!(PydotPlus, pyimport_conda("pydotplus", "pydotplus"))
 end
 
-function dot(dot_data)
+function draw(dot_data)
     graph = PydotPlus.graph_from_dot_data(dot_data)
     graph.progs = Dict("dot" => "$(Conda.BINDIR)/dot")
     display("image/png", Vector{UInt8}(graph.create_png()))
