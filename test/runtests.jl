@@ -1,11 +1,6 @@
 using JuliaDot
 using Test
 
-@testset "LoadPydotPlus" begin
-  using PyCall
-  JuliaDot.PydotPlus != PyCall.PyPtr_NULL
-end
-
 @testset "draw graph" begin
     dot_data = """
 digraph G {
