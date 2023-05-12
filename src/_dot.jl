@@ -1,17 +1,14 @@
 
 export draw
 export drawfile
+export JuliaDotENV
 
-using PyCall
-
-const PydotPlus = PyNULL()
+const JuliaDotENV = Dict(
+    "PATH" => "dot"
+)
 
 struct DrawResult
     content
-end
-
-function __init__()
-    copy!(PydotPlus, pyimport_conda("pydotplus", "pydotplus"))
 end
 
 function Base.show(io::IO, ::MIME"image/png", c::DrawResult)
@@ -23,13 +20,28 @@ function Base.write(io::IO, c::DrawResult)
 end
 
 function draw(data)
-    graph = PydotPlus.graph_from_dot_data(data)
-    DrawResult(Vector{UInt8}(graph.create_png()))
+    file = tempname(cleanup=false)
+    open(`$(JuliaDotENV["PATH"]) -Tpng -o $file`, "w", stdout) do io
+        write(io, data)
+    end
+    img = Vector{UInt8}(undef,0)
+    try
+        open(file) do io
+            while !eof(io)
+                push!(img, read(io, UInt8))
+            end
+        end
+    catch
+        throw(ErrorException("Cannot read PNG file."))
+    finally
+        rm(file)
+    end
+    DrawResult(img)
 end
 
-function drawfile(x)
-    data = open(x) do f
-        read(f, String)
+function drawfile(file)
+    data = open(file) do io
+        read(io, String)
     end
     draw(data)
 end

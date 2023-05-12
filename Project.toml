@@ -1,10 +1,7 @@
 name = "JuliaDot"
 uuid = "6e6d1f42-da04-4af2-a797-beb4a2ff0d54"
 authors = ["Hiroyuki Okamura"]
-version = "0.5.0"
-
-[deps]
-PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+version = "0.6.0"
 
 [compat]
 julia = "1"

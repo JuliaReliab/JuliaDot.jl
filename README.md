@@ -21,9 +21,9 @@ apt updata
 apt install graphviz
 ```
 
-This package calls the python package `pydotplus`. Probably, it will be installed automatically when this package is added with `Pkg.add`. But, on your enverinement, it may be installed with the pip command
-```sh
-pip install pydotplus
+When the tool cannot find the graphivz dot even though it has been installed, please set the environemnt:
+```julia
+JuliaDotENV["PATH"] = "/path/to/dot"
 ```
 
 ## Usage
