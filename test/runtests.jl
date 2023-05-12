@@ -1,9 +1,9 @@
 using JuliaDot
 using Test
-using PyCall
 
 @testset "LoadPydotPlus" begin
-    JuliaDot.PydotPlus != PyCall.PyPtr_NULL
+  using PyCall
+  JuliaDot.PydotPlus != PyCall.PyPtr_NULL
 end
 
 @testset "draw graph" begin
@@ -69,6 +69,19 @@ digraph G {
   end [shape=Msquare];
 }
 """
-    println(length(dot(dot_data)))
+    write("example.png", draw(dot_data))
 end
 
+@testset "example" begin
+  result = draw("""
+    digraph G {
+      a -> b
+    }
+    """)
+  write("output.png", result)
+end
+
+@testset "fromfile" begin
+  result = drawfile("example.dot")
+  write("output2.png", result)
+end

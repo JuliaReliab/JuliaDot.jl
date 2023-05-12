@@ -1,20 +1,35 @@
 
 export draw
+export drawfile
 
 using PyCall
-using Conda
-Conda.add("python-graphviz", channel="conda-forge")
-Conda.add("pydotplus", channel="conda-forge")
 
 const PydotPlus = PyNULL()
+
+struct DrawResult
+    content
+end
 
 function __init__()
     copy!(PydotPlus, pyimport_conda("pydotplus", "pydotplus"))
 end
 
-function draw(dot_data)
-    graph = PydotPlus.graph_from_dot_data(dot_data)
-    graph.progs = Dict("dot" => "$(Conda.BINDIR)/dot")
-    display("image/png", Vector{UInt8}(graph.create_png()))
+function Base.show(io::IO, ::MIME"image/png", c::DrawResult)
+    write(io, c.content)
 end
 
+function Base.write(io::IO, c::DrawResult)
+    write(io, c.content)
+end
+
+function draw(data)
+    graph = PydotPlus.graph_from_dot_data(data)
+    DrawResult(Vector{UInt8}(graph.create_png()))
+end
+
+function drawfile(x)
+    data = open(x) do f
+        read(f, String)
+    end
+    draw(data)
+end
