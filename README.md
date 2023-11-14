@@ -17,7 +17,7 @@ Pkg.add(PackageSpec(url="https://github.com/JuliaReliab/JuliaDot.jl.git"))
 
 Also the package requires Graphviz to draw the diagram. In the case of Ubuntu, please install the graphviz package as follows in the terminal.
 ```sh
-apt updata
+apt update
 apt install graphviz
 ```
 
